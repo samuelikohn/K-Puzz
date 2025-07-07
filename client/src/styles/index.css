@@ -7,8 +7,11 @@
 html[data-theme='light'] {
     --background-color-body: #fafafa;
     --background-color-control-box: #ffffff;
+    --background-color-box-revealed: #bbbbbb;
+    --shadow-color-box-revealed: #aaaaaa;
     --border-control-box: #ffffff;
     --text-color: #000000;
+    --text-color-box-revealed: #444444;
     --button-color: #81daf5;
     --button-border-color: #01a9db;
     --shadow-color: #999999;
@@ -19,8 +22,11 @@ html[data-theme='light'] {
 html[data-theme='dark'] {
     --background-color-body: #222222;
     --background-color-control-box: #1d1d1d;
+    --background-color-box-revealed: #555555;
+    --shadow-color-box-revealed: #444444;
     --border-control-box: #272727;
     --text-color: #dddddd;
+    --text-color-box-revealed: #bbbbbb;
     --button-color: #ff9f40;
     --button-border-color: #d96c00;
     --shadow-color: #0c0c0c;

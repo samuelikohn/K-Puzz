@@ -41,7 +41,7 @@ export default function Box(props) {
         <div className="boxDiv" style={divStyle}>
             <p className="boxTop">{props.topVal}</p>
             <input
-                className="boxBottom"
+                className={props.boxStates && props.boxStates[props.bottomVal].revealed ? "revealed" : "boxBottom"}
                 type="text"
                 maxLength={2}
                 onChange={handleInput}
