@@ -1,0 +1,24 @@
+.numberItem {
+    text-align: center;
+    margin: 0.25rem;
+    font-size: larger;
+    border: 0.25rem solid var(--background-color-control-box);
+    width: 1.5rem;
+    height: 1.5rem;
+    transition:
+        border 0.2s ease;
+}
+
+.numberItemBlocked {
+    text-align: center;
+    margin: 0.25rem;
+    font-size: larger;
+    border: 0.25rem solid var(--background-color-control-box);
+    width: 1.5rem;
+    height: 1.5rem;
+    transition:
+        border 0.2s ease;
+    background:
+        linear-gradient(45deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 45%, #ff0000 47%, #ff0000 53%, rgba(0,0,0,0) 55%, rgba(0,0,0,0) 100%),
+        linear-gradient(135deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 46%, #ff0000 47%, #ff0000 53%, rgba(0,0,0,0) 55%, rgba(0,0,0,0) 100%);
+}

@@ -1,0 +1,5 @@
+.puzzleDiv {
+    position: relative;
+    overflow: hidden;
+    margin: 1rem 0;
+}

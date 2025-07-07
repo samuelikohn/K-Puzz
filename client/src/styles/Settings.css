@@ -1,0 +1,73 @@
+.settingsForm {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+}
+
+.setting {
+    width: 6rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.setting select {
+    font-size: medium;
+}
+
+.setting button {
+    margin: 0;
+    padding: 0.125rem;
+}
+
+.setting input {
+    background-color: var( --background-color-body);
+    color: var(--text-color);
+    border: 0.0625rem inset var( --background-color-control-box);
+    border-radius: 0.25rem;
+    width: 8rem;
+    height: 1.25rem;
+    margin: 0.5rem;
+    transition: 
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border 0.2s ease;
+}
+
+.height {
+    padding-bottom: 1rem;
+}
+
+.getID {
+    display: flex;
+    flex-direction: column;
+}
+
+.copyField {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#idInput {
+    margin-bottom: 1rem;
+}
+
+#idInputLabel {
+    width: 10rem;
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 0.0625rem solid var(--text-color);
+    transition:
+        border-top 0.2s ease;
+}
+
+.themeToggle {
+    padding: 1rem 2rem;
+    border-top: 0.0625rem solid var(--text-color);
+    transition:
+        border-top 0.2s ease;
+}

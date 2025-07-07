@@ -1,0 +1,39 @@
+.selectBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+}
+
+.select {
+    position: inherit;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 5rem;
+    box-shadow: 0.125rem 0.125rem 0.1875rem var(--shadow-color);
+    border-top: 0.0625rem solid var(--border-control-box);
+    border-left: 0.0625rem solid var(--border-control-box);
+    transition:
+        box-shadow 0.2s ease,
+        border 0.2s ease;
+}
+
+.select p {
+    background-color: var(--background-color-control-box);
+    padding: 0.5rem 2rem;
+    margin: 0;
+    transition:
+        background-color 0.2s ease,
+}
+
+.select p:hover {
+    filter: brightness(var(--text-filter));
+}
+
+.puzzleSelect {
+    border-top: 0.0625rem solid var(--text-color);
+    transition:
+        border-top 0.2s ease;
+}

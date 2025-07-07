@@ -1,0 +1,7 @@
+path {
+    fill: none;
+    stroke-width: 0.375rem;
+    stroke: var(--text-color);
+    transition:
+        stroke 0.2s ease;
+}

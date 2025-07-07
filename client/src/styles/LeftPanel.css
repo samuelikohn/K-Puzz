@@ -1,0 +1,13 @@
+.leftPanel {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    align-items: center;
+}
+
+.title {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}

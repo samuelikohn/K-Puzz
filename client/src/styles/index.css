@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Inter');
+
+* {
+    font-family: 'Inter';
+}
+
+html[data-theme='light'] {
+    --background-color-body: #fafafa;
+    --background-color-control-box: #ffffff;
+    --border-control-box: #ffffff;
+    --text-color: #000000;
+    --button-color: #81daf5;
+    --button-border-color: #01a9db;
+    --shadow-color: #999999;
+    --scrollbar-color: #333333;
+    --text-filter: 0.9;
+}
+
+html[data-theme='dark'] {
+    --background-color-body: #222222;
+    --background-color-control-box: #1d1d1d;
+    --border-control-box: #272727;
+    --text-color: #dddddd;
+    --button-color: #ff9f40;
+    --button-border-color: #d96c00;
+    --shadow-color: #0c0c0c;
+    --scrollbar-color: #fafafa;
+    --text-filter: 1.25;
+}
+
+body {
+    background-color: var(--background-color-body);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 0;
+    padding: 0;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.controlBox {
+    border-radius: 0.625rem;
+    min-width: 13rem;
+    box-shadow: inset 0 0.0625rem 0.1875rem var(--shadow-color);
+    background-color: var(--background-color-control-box);
+    border-bottom: 0.125rem solid var(--border-control-box);
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 2rem;
+    transition:
+        box-shadow 0.2s ease,
+        border-bottom 0.2s ease,
+        background-color 0.2s ease;
+}
+
+button {
+    font-size: large;
+    margin: 1rem 2rem;
+    background-color: var(--button-color);
+    padding: 0.625rem 1rem;
+    border: 0.25rem solid var(--button-border-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border 0.2s ease
+}
+
+.iconBtn {
+    border-width: 0.1875rem;
+    width: 2rem;
+    height: 2rem;
+}
+
+button:hover {
+    filter: brightness(0.9);
+}

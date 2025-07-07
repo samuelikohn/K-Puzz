@@ -1,0 +1,48 @@
+textarea {
+    position: absolute;
+    overflow: hidden;
+    outline: none;
+    cursor: pointer;
+    resize: none;
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--background-color-body);
+    color: var(--text-color);
+    border-radius: 0.375rem;
+    border: none;
+    box-shadow: 0.0625rem 0.0625rem 0.1875rem var(--shadow-color);
+    border-top: 0.0625rem solid var(--border-control-box);
+    border-left: 0.0625rem solid var(--border-control-box);
+    transition:
+        width 0.1s ease,
+        height 0.1s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease,
+        border 0.2s ease;
+}
+
+textarea:focus {
+    width: 4rem;
+    height: 6rem;
+    overflow-y: scroll;
+    z-index: 1;
+    transition: 
+        width 0.1s ease,
+        height 0.1s ease;
+}
+
+textarea:not(:focus):hover {
+    filter: brightness(var(--text-filter));
+}
+
+textarea::-webkit-scrollbar {
+    background-color: gray;
+    border-radius: 0.25rem;
+    width: 0.5rem;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-color);
+    border-radius: 0.25rem;
+    width: 0.5rem;
+}
