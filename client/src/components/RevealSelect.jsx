@@ -2,10 +2,6 @@ import "../styles/Select.css"
 
 export default function RevealSelect(props) {
 
-    function revealBox() {
-        console.log("box revealed")
-    }
-
     const selectStyle = props.cursorPos ? {
         left: props.cursorPos[0],
         top: props.cursorPos[1]
@@ -14,8 +10,8 @@ export default function RevealSelect(props) {
     return (
         <div className="selectBackdrop" onClick={props.onClose}>
             <div className="select" style={selectStyle}>
-                <p className="boxSelect" onClick={revealBox}>Box</p>
-                <p className="puzzleSelect" onClick={props.revealAllBoxes}>Puzzle</p>
+                <p className="boxSelect" onClick={() => props.setRevealHighlights(true)}>Box</p>
+                <p className="puzzleSelect" onClick={() => props.setConfirmRevealShown(true)}>Puzzle</p>
             </div>
         </div>
     )

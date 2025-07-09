@@ -10,20 +10,20 @@ export default function Settings(props) {
     const {theme, toggleTheme} = useTheme()
     const textRef = useRef()
 
+    function copyToClipboard() {
+        const copyText = textRef.current.value
+        const didCopy = copy(copyText)
+        if (didCopy) {
+            toast("Copied!")
+        }
+    }
+
     function filterInput(event) {
         const input = event.target
         input.value = input.value.replace(/[^0-9]/g, "")
         if (input.value.charAt(0) === "0") {
             input.value = input.value.slice(1)
         }
-    }
-
-    function handleWidthChange(event) {
-        setSelectedWidth(event.target.value)
-    }
-
-    function handleHeightChange(event) {
-        setSelectedHeight(event.target.value)
     }
 
     function generateNewPuzzle(formData) {
@@ -33,14 +33,6 @@ export default function Settings(props) {
         props.generateNewPuzzle({width, height, id})
     }
 
-    function copyToClipboard() {
-        const copyText = textRef.current.value
-        const didCopy = copy(copyText)
-        if (didCopy) {
-            toast("Copied!")
-        }
-    }
-
     return (
         <form className="settingsForm" action={generateNewPuzzle}>
             <button className="newGameBtn" type="submit">New Game</button>
@@ -48,7 +40,12 @@ export default function Settings(props) {
                 <h4>Settings</h4>
                 <div className="setting">
                     <label htmlFor="puzzleWidth">Width</label>
-                    <select name="puzzleWidth" id="puzzleWidth" value={selectedWidth} onChange={handleWidthChange}>
+                    <select
+                        name="puzzleWidth"
+                        id="puzzleWidth"
+                        value={selectedWidth}
+                        onChange={(event) => setSelectedWidth(event.target.value)}
+                    >
                         <option value="3">3</option>
                         <option value="4">4</option>
                         <option value="5">5</option>
@@ -56,7 +53,12 @@ export default function Settings(props) {
                 </div>
                 <div className="setting height">
                     <label htmlFor="puzzleHeight">Height</label>
-                    <select name="puzzleHeight" id="puzzleHeight" value={selectedHeight} onChange={handleHeightChange}>
+                    <select
+                        name="puzzleHeight"
+                        id="puzzleHeight"
+                        value={selectedHeight}
+                        onChange={(event) => setSelectedHeight(event.target.value)}
+                    >
                         <option value="3">3</option>
                         <option value="4">4</option>
                         <option value="5">5</option>

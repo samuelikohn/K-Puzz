@@ -8,7 +8,7 @@ html[data-theme='light'] {
     --background-color-body: #fafafa;
     --background-color-control-box: #ffffff;
     --background-color-box-revealed: #bbbbbb;
-    --shadow-color-box-revealed: #aaaaaa;
+    --shadow-color-box-revealed: #888888;
     --border-control-box: #ffffff;
     --text-color: #000000;
     --text-color-box-revealed: #444444;
@@ -74,6 +74,10 @@ button {
     transition:
         background-color 0.2s ease,
         border 0.2s ease
+}
+
+input:focus {
+    outline: none;
 }
 
 .iconBtn {

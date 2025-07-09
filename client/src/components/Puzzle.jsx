@@ -25,18 +25,6 @@ export default function Puzzle(props) {
         minHeight: (3) * (HEIGHT + MARGIN) + WIDTH + "rem"
     }
 
-    function handleBoxChange(boxID, currentValue) {
-        props.updateNumbersUsed(boxID, currentValue)
-        setBoxCorrectness(prevBoxCorrectness => ({
-            ...prevBoxCorrectness,
-            [boxID]: (boxID === currentValue)
-        }))
-    }
-
-    function closeResultsPage() {
-        props.setResultsShown(false)
-    }
-
     // Wait for new puzzle data to reset states
     useEffect(() => {
         const initialBoxCorrectness = {}
@@ -56,9 +44,17 @@ export default function Puzzle(props) {
         }
     }, [boxCorrectness])
 
+    function handleBoxChange(boxID, currentValue) {
+        props.updateNumbersUsed(boxID, currentValue)
+        setBoxCorrectness(prevBoxCorrectness => ({
+            ...prevBoxCorrectness,
+            [boxID]: (boxID === currentValue)
+        }))
+    }
+
     return (
         <div className="puzzleDiv controlBox" style={divStyle}>
-            {props.resultsShown && <Results onClose={closeResultsPage} finalTime={finalTime}/>}
+            {props.resultsShown && <Results onClose={() => props.setResultsShown(false)} finalTime={finalTime}/>}
             {
                 props.puzzle.puzzle.boxes.map((box, i) =>
                     <Fragment key={props.keys[i]}>
@@ -75,6 +71,9 @@ export default function Puzzle(props) {
                             onChange={handleBoxChange}
                             isSolved={props.isSolved}
                             boxStates={props.boxStates}
+                            checkBox={props.checkBox}
+                            revealBox={props.revealBox}
+                            resetBoxStates={props.resetBoxStates}
                         />
                         <Notes
                             x={box.x}

@@ -1,5 +1,7 @@
 import { useState } from "react"
 import Numbers from "./Numbers.jsx"
+import ConfirmCheck from "./ConfirmCheck.jsx"
+import ConfirmReveal from "./ConfirmReveal.jsx"
 import HowToPlay from "./HowToPlay.jsx"
 import CheckSelect from "./CheckSelect.jsx"
 import RevealSelect from "./RevealSelect.jsx"
@@ -7,6 +9,8 @@ import About from "./About.jsx"
 import "../styles/RightPanel.css"
 
 export default function RightPanel(props) {
+    const [confirmCheckShown, setConfirmCheckShown] = useState(false)
+    const [confirmRevealShown, setConfirmRevealShown] = useState(false)
     const [howToPlayPageShown, setHowToPlayPageShown] = useState(false)
     const [aboutPageShown, setAboutPageShown] = useState(false)
     const [checkSelectShown, setCheckSelectShown] = useState(false)
@@ -14,13 +18,21 @@ export default function RightPanel(props) {
     const [cursorPos, setCursorPos] = useState(null)
 
     function handleCheckClick(event) {
-        setCheckSelectShown(true)
-        setCursorPos([event.clientX, event.clientY])
+        if (props.checkActive) {
+            props.setCheckHighlights(false)
+        } else {
+            setCheckSelectShown(true)
+            setCursorPos([event.clientX, event.clientY])
+        }
     }
 
     function handleRevealClick(event) {
-        setRevealSelectShown(true)
-        setCursorPos([event.clientX, event.clientY])
+        if (props.revealActive) {
+            props.setRevealHighlights(false)
+        } else {
+            setRevealSelectShown(true)
+            setCursorPos([event.clientX, event.clientY])
+        }
     }
 
     return (
@@ -31,15 +43,33 @@ export default function RightPanel(props) {
                     props.isSolved ?
                     <button className="resultsBtn" onClick={() => props.setResultsShown(true)}>Show Results</button> :
                     <div className="checkReveal">
-                        <button className="check" onClick={props.isSolved ? null : handleCheckClick}>Check...</button>
-                        <button className="reveal" onClick={props.isSolved ? null : handleRevealClick}>Reveal...</button>
+                        <button className="check" onClick={handleCheckClick}>{props.checkActive ? "Cancel" : "Check..."}</button>
+                        <button className="reveal" onClick={handleRevealClick}>{props.revealActive ? "Cancel" : "Reveal..."}</button>
                     </div>
                 }
                 <button onClick={() => setHowToPlayPageShown(true)}>How to Play</button>
                 <button onClick={() => setAboutPageShown(true)}>About</button>
             </div>
-            {checkSelectShown && <CheckSelect onClose={() => setCheckSelectShown(false)} cursorPos={cursorPos}/>}
-            {revealSelectShown && <RevealSelect onClose={() => setRevealSelectShown(false)} cursorPos={cursorPos} revealAllBoxes={props.revealAllBoxes}/>}
+            {
+                checkSelectShown &&
+                <CheckSelect
+                    onClose={() => setCheckSelectShown(false)}
+                    cursorPos={cursorPos}
+                    setConfirmCheckShown={setConfirmCheckShown}
+                    setCheckHighlights={props.setCheckHighlights}
+                />
+            }
+            {
+                revealSelectShown &&
+                <RevealSelect
+                    onClose={() => setRevealSelectShown(false)}
+                    cursorPos={cursorPos}
+                    setConfirmRevealShown={setConfirmRevealShown}
+                    setRevealHighlights={props.setRevealHighlights}
+                />
+            }
+            {confirmCheckShown && <ConfirmCheck onClose={() => setConfirmCheckShown(false)} checkAllBoxes={props.checkAllBoxes}/>}
+            {confirmRevealShown && <ConfirmReveal onClose={() => setConfirmRevealShown(false)} revealAllBoxes={props.revealAllBoxes}/>}
             {howToPlayPageShown && <HowToPlay onClose={() => setHowToPlayPageShown(false)}/>}
             {aboutPageShown && <About onClose={() => setAboutPageShown(false)}/>}
         </>

@@ -7,6 +7,5 @@ export default function LeftPanel(props) {
             <h1 className="title">K-Puzz</h1>
             <Settings generateNewPuzzle={props.generateNewPuzzle} puzzleID={props.puzzleID}/>
         </div>
-
     )
 }

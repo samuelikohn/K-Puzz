@@ -8,6 +8,6 @@ export default function Notes(props) {
     }
 
     return (
-        <textarea style={divStyle} disabled={props.isSolved}/>
+        <textarea style={divStyle} readOnly={props.isSolved}/>
     )
 }
