@@ -30,16 +30,12 @@ export default function Box(props) {
         if (props.boxStates && props.boxStates[props.bottomVal].revealHighlighted) {
             props.revealBox(String(props.bottomVal))
         } else if (inputRef.current && props.boxStates && props.boxStates[props.bottomVal].checkHighlighted) {
-            if (inputRef.current.value) {
-                props.checkBox(String(props.bottomVal), String(props.bottomVal) === inputRef.current.value)
-            } else {
-                props.resetBoxStates()
-            }
+            props.checkBox((inputRef.current.value ? String(props.bottomVal) : ""), String(props.bottomVal) === inputRef.current.value)
         }
     }
     
     function handleInput(event) {
-        // TODO on change from check incorrect, reset to neutral
+        props.resetCheckState(String(props.bottomVal))
         const filteredValue = filterInput(event)
         sendInputToParent(filteredValue)
         setBoxVal(filteredValue)
@@ -63,7 +59,7 @@ export default function Box(props) {
         }
         return "boxBottom"
     }
-    
+
     return (
         <div
             className={

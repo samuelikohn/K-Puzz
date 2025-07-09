@@ -14,7 +14,4 @@
 // loading animation while querying puzzle/generating
 // add tutorial puzzles and notes
     // puzzle 1 busted
-// check box, check puzzle
-// reveal box, reveal puzzle
 // share time and puzzle ID, image
-// count checks and reveals used

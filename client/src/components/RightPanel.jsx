@@ -57,6 +57,7 @@ export default function RightPanel(props) {
                     cursorPos={cursorPos}
                     setConfirmCheckShown={setConfirmCheckShown}
                     setCheckHighlights={props.setCheckHighlights}
+                    setRevealHighlights={props.setRevealHighlights}
                 />
             }
             {
@@ -66,6 +67,7 @@ export default function RightPanel(props) {
                     cursorPos={cursorPos}
                     setConfirmRevealShown={setConfirmRevealShown}
                     setRevealHighlights={props.setRevealHighlights}
+                    setCheckHighlights={props.setCheckHighlights}
                 />
             }
             {confirmCheckShown && <ConfirmCheck onClose={() => setConfirmCheckShown(false)} checkAllBoxes={props.checkAllBoxes}/>}

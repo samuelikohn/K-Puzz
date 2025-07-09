@@ -15,7 +15,11 @@ export default function App() {
     const [startTime, setStartTime] = useState(Date.now())
 	const [isSolved, setIsSolved] = useState(false)
     const [resultsShown, setResultsShown] = useState(false)
+    const [boxCorrectness, setBoxCorrectness] = useState({1: false})
+    const [boxEmptiness, setBoxEmptiness] = useState({1: false})
 	const [boxStates, setBoxStates] = useState(null)
+	const [numChecks, setNumChecks] = useState(0)
+	const [numReveals, setNumReveals] = useState(0)
 
 	// Wait for puzzle data to get puzzle
     useEffect(() => {
@@ -85,21 +89,33 @@ export default function App() {
 	}
 
 	function checkAllBoxes() {
-		// TODO
-		// for each box, if not empty and not revealed and not checked correct and not checked incorrect,
-		// box input val === bottom val ? checked correct : checked incorrect
+		let checks = 0
+		setRevealHighlights(false)
+		setBoxStates(prevBoxStates => {
+			const newBoxStates = {}
+			for (const box of Object.keys(prevBoxStates)) {
+				newBoxStates[box] = {...prevBoxStates[box], checkHighlighted: false}
+				if (!boxEmptiness[Number(box)] && !prevBoxStates[box].revealed && !prevBoxStates[box].checkedCorrect && !prevBoxStates[box].checkedIncorrect) {
+					checks += 1
+					if (boxCorrectness[Number(box)]) {
+						newBoxStates[box].checkedCorrect = true
+					} else {
+						newBoxStates[box].checkedIncorrect = true
+					}
+				}
+			}
+			return newBoxStates
+		})
+		setNumChecks(prevNumChecks => prevNumChecks + checks)
 	}
 
 	function checkBox(boxID, isCorrect) {
-		// TODO
-		// for all boxes, set highlighted to false
-		// if id matches and not revealed, set to isCorrect
 		setBoxStates(prevBoxStates => {
 			const newBoxStates = {}
 			for (const box of Object.keys(prevBoxStates)) {
 				newBoxStates[box] = {...prevBoxStates[box], checkHighlighted: false}
 				if (box === boxID && !prevBoxStates[box].revealed) {
-					if (isCorrect > 0) {
+					if (isCorrect) {
 						newBoxStates[box].checkedCorrect = true
 					} else {
 						newBoxStates[box].checkedIncorrect = true
@@ -108,6 +124,7 @@ export default function App() {
 			}
 			return newBoxStates 
 		})
+		setNumChecks(prevNumChecks => prevNumChecks + 1)
 	}
 
 	function generateNewPuzzle(data) {
@@ -133,25 +150,24 @@ export default function App() {
 		return det(matrixRepresentation) === 0
 	}
 
-	function resetBoxStates() {
-		// TODO do not reset checkedIncorrect boxes
-		const allStates = {}
-		for (const box of currPuzzle.puzzle.boxes) {
-			allStates[box.bottomVal] = {
-				checkHighlighted: false,
-				checkedCorrect: false,
-				checkedIncorrect: false,
-				revealHighlighted: false,
-				revealed: false
-			}
-		}
-		setBoxStates(allStates)
-	}
-	
-	function revealAllBoxes() {
+	function resetCheckState(boxID) {
 		setBoxStates(prevBoxStates => {
 			const newBoxStates = {}
 			for (const box of Object.keys(prevBoxStates)) {
+				newBoxStates[box] = {...prevBoxStates[box], checkedIncorrect: (box === boxID ? false : prevBoxStates[box].checkedIncorrect)}
+			}
+			return newBoxStates 
+		})
+	}
+	
+	function revealAllBoxes() {
+		let reveals = 0
+		setBoxStates(prevBoxStates => {
+			const newBoxStates = {}
+			for (const box of Object.keys(prevBoxStates)) {
+				if (!prevBoxStates[box].revealed) {
+					reveals += 1
+				}
 				newBoxStates[box] = {
 					checkHighlighted: false,
 					checkedCorrect: false,
@@ -162,6 +178,7 @@ export default function App() {
 			}
 			return newBoxStates 
 		})
+		setNumReveals(prevNumReveals => prevNumReveals + reveals)
 	}
 	
 	function revealBox(boxID) {
@@ -175,6 +192,7 @@ export default function App() {
 			}
 			return newBoxStates 
 		})
+		setNumReveals(prevNumReveals => prevNumReveals + 1)
 	}
 
 	function setCheckHighlights(isHighlighted) {
@@ -195,7 +213,7 @@ export default function App() {
 			const newBoxStates = {}
 			for (const box of Object.keys(prevBoxStates)) {
 				newBoxStates[box] = {...prevBoxStates[box]}
-				if (!prevBoxStates[box].revealed && !prevBoxStates[box].checkedCorrect && !!prevBoxStates[box].checkedIncorrect) {
+				if (!prevBoxStates[box].revealed && !prevBoxStates[box].checkedCorrect && !prevBoxStates[box].checkedIncorrect) {
 					newBoxStates[box].revealHighlighted = isHighlighted
 				}
 			}
@@ -246,10 +264,16 @@ export default function App() {
 					setResultsShown={setResultsShown}
 					isSolved={isSolved}
 					setIsSolved={setIsSolved}
+					boxCorrectness={boxCorrectness}
+					boxEmptiness={boxEmptiness}
+					setBoxCorrectness={setBoxCorrectness}
+					setBoxEmptiness={setBoxEmptiness}
 					boxStates={boxStates}
 					checkBox={checkBox}
 					revealBox={revealBox}
-					resetBoxStates={resetBoxStates}
+					resetCheckState={resetCheckState}
+                    numChecks={numChecks}
+                    numReveals={numReveals}
 				/>
 			}
 			<RightPanel

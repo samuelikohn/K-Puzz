@@ -6,7 +6,6 @@ import Connections from "./Connections.jsx"
 import "../styles/Puzzle.css"
 
 export default function Puzzle(props) {
-    const [boxCorrectness, setBoxCorrectness] = useState({1: false})
     const [finalTime, setFinalTime] = useState(0)
 
     // Box dimensions and positions
@@ -28,25 +27,32 @@ export default function Puzzle(props) {
     // Wait for new puzzle data to reset states
     useEffect(() => {
         const initialBoxCorrectness = {}
+        const initialBoxEmptiness = {}
         for (let i = 1; i <= numBoxes; i++) {
             initialBoxCorrectness[i] = false
+            initialBoxEmptiness[i] = true
         }
-        setBoxCorrectness(initialBoxCorrectness)
+        props.setBoxCorrectness(initialBoxCorrectness)
+        props.setBoxEmptiness(initialBoxEmptiness)
         props.updateNumbersUsed(null, null)
     }, [props.puzzle])
 
     // Wait for box correctness to update then check if puzzle is solved
     useEffect(() => {
-        if (Object.values(boxCorrectness).every(value => value === true)) {
+        if (Object.values(props.boxCorrectness).every(value => value === true)) {
             setFinalTime(Date.now() - props.startTime)
             props.setIsSolved(true)
             props.setResultsShown(true)
         }
-    }, [boxCorrectness])
+    }, [props.boxCorrectness])
 
     function handleBoxChange(boxID, currentValue) {
         props.updateNumbersUsed(boxID, currentValue)
-        setBoxCorrectness(prevBoxCorrectness => ({
+        props.setBoxEmptiness(prevBoxEmptiness => ({
+            ...prevBoxEmptiness,
+            [boxID]: (currentValue === 0)
+        }))
+        props.setBoxCorrectness(prevBoxCorrectness => ({
             ...prevBoxCorrectness,
             [boxID]: (boxID === currentValue)
         }))
@@ -54,7 +60,15 @@ export default function Puzzle(props) {
 
     return (
         <div className="puzzleDiv controlBox" style={divStyle}>
-            {props.resultsShown && <Results onClose={() => props.setResultsShown(false)} finalTime={finalTime}/>}
+            {
+                props.resultsShown &&
+                <Results
+                    onClose={() => props.setResultsShown(false)}
+                    finalTime={finalTime}
+                    numChecks={props.numChecks}
+                    numReveals={props.numReveals}
+                />
+            }
             {
                 props.puzzle.puzzle.boxes.map((box, i) =>
                     <Fragment key={props.keys[i]}>
@@ -73,7 +87,7 @@ export default function Puzzle(props) {
                             boxStates={props.boxStates}
                             checkBox={props.checkBox}
                             revealBox={props.revealBox}
-                            resetBoxStates={props.resetBoxStates}
+                            resetCheckState={props.resetCheckState}
                         />
                         <Notes
                             x={box.x}

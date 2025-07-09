@@ -18,9 +18,12 @@ export default function Results(props) {
                 <ScrollArea.Viewport className="viewport">
                     <ScrollArea.Content>
                         <div className="overlay resultsDiv" onClick={(event) => event.stopPropagation}>
-                            <h1 className="congrats">Congratulations!</h1>
-                            <h2>Final Time:</h2>
-                            <h2 className="finalTime">{translateTime(props.finalTime)}</h2>
+                            <h2 className="congrats">Congratulations!</h2>
+                            <div className="controlBox">
+                                <h4 className="bottomBreak">Final Time: {translateTime(props.finalTime)}</h4>
+                                <h4 className="bottomBreak">Checks Used: {props.numChecks}</h4>
+                                <h4>Reveals Used: {props.numReveals}</h4>
+                            </div>
                             <button onClick={props.onClose}>Show Puzzle</button>
                         </div>
                     </ScrollArea.Content>

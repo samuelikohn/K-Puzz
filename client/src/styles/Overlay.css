@@ -80,12 +80,15 @@
     margin-left: 6rem;
 }
 
-.resultsDiv h2 {
-    margin-bottom: 0;
-}
-
 .resultsDiv button {
     margin-top: 3rem;
+}
+
+.resultsDiv h4 {
+    padding-bottom: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 0;
+    min-width: 9rem;
 }
 
 .confirmDiv {
@@ -98,4 +101,12 @@
 
 .confirmBtns button {
     width: 6rem;
+}
+
+.congrats {
+    margin-bottom: 2rem;
+}
+
+.bottomBreak {
+    border-bottom: 1px solid var(--text-color);
 }

@@ -10,7 +10,10 @@ export default function CheckSelect(props) {
     return (
         <div className="selectBackdrop" onClick={props.onClose}>
             <div className="select" style={selectStyle}>
-                <p className="boxSelect" onClick={() => props.setCheckHighlights(true)}>Box</p>
+                <p className="boxSelect" onClick={() => {
+                    props.setRevealHighlights(false)
+                    props.setCheckHighlights(true)
+                }}>Box</p>
                 <p className="puzzleSelect" onClick={() => props.setConfirmCheckShown(true)}>Puzzle</p>
             </div>
         </div>
