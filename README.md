@@ -4,6 +4,7 @@
 ## tech used
 ## Font
 ## Feature list
+## Env vars
 
 ## Include 'about' info w/ links, site instead of source
 
@@ -12,6 +13,3 @@
 // readme
 // tests
 // loading animation while querying puzzle/generating
-// add tutorial puzzles and notes
-    // puzzle 1 busted
-// share time and puzzle ID, image

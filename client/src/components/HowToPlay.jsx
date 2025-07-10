@@ -27,6 +27,9 @@ export default function HowToPlay(props) {
                             </div>
                             <img src={`src/assets/example_${theme}.png`} alt="Example Puzzle"/>
                             <div className="controlBox">
+                                <p>Enter a <b>Puzzle ID</b> of <b>1</b>, <b>2</b>, <b>3</b>, <b>4</b>, or <b>5</b> for simple tutorial puzzles.</p>
+                            </div>
+                            <div className="controlBox">
                                 <p>Every puzzle is guaranteed to have a unique solution.</p>
                             </div>
                             <button onClick={props.onClose}>Close</button>

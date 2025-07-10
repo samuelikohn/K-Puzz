@@ -5,6 +5,7 @@ import Puzzle from "./components/Puzzle.jsx"
 import LeftPanel from "./components/LeftPanel.jsx"
 import RightPanel from "./components/RightPanel.jsx"
 import { generatePuzzle } from "./utils/generatePuzzle.js"
+import tutorialPuzzles from "./utils/tutorialPuzzles.js"
 import "./styles/App.css"
 
 export default function App() {
@@ -29,14 +30,19 @@ export default function App() {
 					throw new Error("No puzzle ID provided")
 				}
 
-				const response = await fetch(`/puzzle/${puzzleID}`)
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`)
+				let newPuzzle
+				if ([1, 2, 3, 4, 5].includes(puzzleID)) {
+					newPuzzle = {...tutorialPuzzles[puzzleID - 1]}
+				} else {
+					const response = await fetch(`/puzzle/${puzzleID}`)
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`)
+					}
+					const data = await response.json()
+					newPuzzle = {...data, puzzle: JSON.parse(data.puzzle)}
 				}
-				const data = await response.json()
-
+				
 				// On successful GET, set states
-				const newPuzzle = {...data, puzzle: JSON.parse(data.puzzle)}
 				const keys = []
 				for (let i = 0; i < 2 * newPuzzle.puzzle.boxes.length; i++) {
 					keys.push(v4())
@@ -128,6 +134,8 @@ export default function App() {
 	}
 
 	function generateNewPuzzle(data) {
+		setNumChecks(0)
+		setNumReveals(0)
 		setBoxStates(null)
 		setPuzzleData(data)
 		setIsSolved(false)
@@ -165,15 +173,10 @@ export default function App() {
 		setBoxStates(prevBoxStates => {
 			const newBoxStates = {}
 			for (const box of Object.keys(prevBoxStates)) {
-				if (!prevBoxStates[box].revealed) {
+				newBoxStates[box] = {...prevBoxStates[box]}
+				if (!prevBoxStates[box].revealed && !prevBoxStates[box].checkedCorrect) {
 					reveals += 1
-				}
-				newBoxStates[box] = {
-					checkHighlighted: false,
-					checkedCorrect: false,
-					checkedIncorrect: false,
-					revealHighlighted: false,
-					revealed: !prevBoxStates[box].checkedCorrect
+					newBoxStates[box].revealed = true
 				}
 			}
 			return newBoxStates 
@@ -213,7 +216,7 @@ export default function App() {
 			const newBoxStates = {}
 			for (const box of Object.keys(prevBoxStates)) {
 				newBoxStates[box] = {...prevBoxStates[box]}
-				if (!prevBoxStates[box].revealed && !prevBoxStates[box].checkedCorrect && !prevBoxStates[box].checkedIncorrect) {
+				if (!prevBoxStates[box].revealed && !prevBoxStates[box].checkedCorrect) {
 					newBoxStates[box].revealHighlighted = isHighlighted
 				}
 			}

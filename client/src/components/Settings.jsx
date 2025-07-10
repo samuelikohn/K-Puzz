@@ -35,7 +35,7 @@ export default function Settings(props) {
 
     return (
         <form className="settingsForm" action={generateNewPuzzle}>
-            <button className="newGameBtn" type="submit">New Game</button>
+            <button className="newGameBtn" type="submit">Generate Puzzle</button>
             <div className="controlBox">
                 <h4>Settings</h4>
                 <div className="setting">
