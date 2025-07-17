@@ -7,10 +7,10 @@ export default function HowToPlay(props) {
 
     return (
         <div className="overlayBackdrop" onClick={props.onClose}>
-            <ScrollArea.Root className="scrollArea">
+            <ScrollArea.Root className="scrollArea" onClick={(event) => event.stopPropagation()}>
                 <ScrollArea.Viewport className="viewport">
                     <ScrollArea.Content>
-                        <div className="overlay" onClick={(event) => event.stopPropagation()}>
+                        <div className="overlay">
                             <h2>How to Play</h2>
                             <div className="controlBox">
                                 <h4>There is only one rule:</h4>

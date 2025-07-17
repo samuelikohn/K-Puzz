@@ -39,7 +39,7 @@
 }
 
 .viewport {
-    height: 90%;
+    height: 100%;
     border-radius: 0.5rem;
 }
 
@@ -48,7 +48,7 @@
     justify-content: center;
     background-color: gray;
     width: 0.5rem;
-    height: 88%;
+    height: 98%;
     border-radius: 0.25rem;
     margin: 0.5rem;
     opacity: 0;
