@@ -12,4 +12,6 @@
 // Blog and site links when done
 // readme
 // tests
-// loading animation while querying puzzle/generating
+// refactor to frontend only and build
+// share results
+    // query string for ids

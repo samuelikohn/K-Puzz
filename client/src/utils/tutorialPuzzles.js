@@ -545,7 +545,7 @@ export default [
 			]
 		},
 		width: 3,
-		height: 5
+		height: 2
 	},
 	{
 		puzzle: {

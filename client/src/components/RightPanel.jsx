@@ -49,6 +49,9 @@ export default function RightPanel(props) {
                 }
                 <button onClick={() => setHowToPlayPageShown(true)}>How to Play</button>
                 <button onClick={() => setAboutPageShown(true)}>About</button>
+                <a href="https://github.com/samuelikohn/K-Puzz/issues/new" target="_blank" referrerPolicy="no-referrer">
+                    <button>Report a Bug</button>
+                </a>
             </div>
             {
                 checkSelectShown &&

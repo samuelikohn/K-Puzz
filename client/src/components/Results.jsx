@@ -17,7 +17,7 @@ export default function Results(props) {
             <ScrollArea.Root className="scrollArea">
                 <ScrollArea.Viewport className="viewport">
                     <ScrollArea.Content>
-                        <div className="overlay resultsDiv" onClick={(event) => event.stopPropagation}>
+                        <div className="overlay resultsDiv" onClick={(event) => event.stopPropagation()}>
                             <h2 className="congrats">Congratulations!</h2>
                             <div className="controlBox">
                                 <h4 className="bottomBreak">Final Time: {translateTime(props.finalTime)}</h4>

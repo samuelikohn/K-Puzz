@@ -9,21 +9,21 @@ import tutorialPuzzles from "./utils/tutorialPuzzles.js"
 import "./styles/App.css"
 
 export default function App() {
-    const [currPuzzle, setCurrPuzzle] = useState(null)
-    const [numbersUsed, setNumbersUsed] = useState({})
-    const [puzzleData, setPuzzleData] = useState({width: 3, height: 3, id: 0})
-    const [boxKeys, setBoxKeys] = useState([])
-    const [startTime, setStartTime] = useState(Date.now())
+	const [currPuzzle, setCurrPuzzle] = useState(null)
+	const [numbersUsed, setNumbersUsed] = useState({})
+	const [puzzleData, setPuzzleData] = useState({width: 3, height: 3, id: 0})
+	const [boxKeys, setBoxKeys] = useState([])
+	const [startTime, setStartTime] = useState(Date.now())
 	const [isSolved, setIsSolved] = useState(false)
-    const [resultsShown, setResultsShown] = useState(false)
-    const [boxCorrectness, setBoxCorrectness] = useState({1: false})
-    const [boxEmptiness, setBoxEmptiness] = useState({1: false})
+	const [resultsShown, setResultsShown] = useState(false)
+	const [boxCorrectness, setBoxCorrectness] = useState({1: false})
+	const [boxEmptiness, setBoxEmptiness] = useState({1: false})
 	const [boxStates, setBoxStates] = useState(null)
 	const [numChecks, setNumChecks] = useState(0)
 	const [numReveals, setNumReveals] = useState(0)
 
 	// Wait for puzzle data to get puzzle
-    useEffect(() => {
+	useEffect(() => {
 		async function getPuzzleByID(puzzleID) {
 			try {
 				if (!puzzleID) {
@@ -66,7 +66,7 @@ export default function App() {
 			}
 		}
 		getPuzzleByID(puzzleData.id)
-    }, [puzzleData])
+	}, [puzzleData])
 
 	// Once puzzle is retrieved, set box states
 	useEffect(() => {
@@ -275,8 +275,8 @@ export default function App() {
 					checkBox={checkBox}
 					revealBox={revealBox}
 					resetCheckState={resetCheckState}
-                    numChecks={numChecks}
-                    numReveals={numReveals}
+					numChecks={numChecks}
+					numReveals={numReveals}
 				/>
 			}
 			<RightPanel
