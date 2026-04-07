@@ -34,7 +34,7 @@ export default function About(props) {
                             <div className="links">
                                 <button onClick={() => window.open("https://personalportfolio-three-pi.vercel.app/", "_blank").focus()}>Website</button>
                                 <button onClick={() => window.open("https://github.com/samuelikohn", "_blank").focus()}>GitHub</button>
-                                <button onClick={() => window.open("https://personalportfolio-git-main-sam-kohns-projects.vercel.app/blog/kpuzz", "_blank").focus()}>Blog</button>
+                                <button onClick={() => window.open("https://personalportfolio-three-pi.vercel.app/blog/kpuzz", "_blank").focus()}>Blog</button>
                                 <button onClick={() => window.open("https://github.com/samuelikohn/K-Puzz", "_blank").focus()}>Source</button>
                             </div>
                             <br/>

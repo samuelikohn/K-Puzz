@@ -3,7 +3,7 @@ import { useTheme } from '../contexts/ThemeContext'
 import "../styles/Overlay.css"
 
 export default function HowToPlay(props) {
-    const {theme, toggleTheme} = useTheme()
+    const {theme, _} = useTheme()
 
     return (
         <div className="overlayBackdrop" onClick={props.onClose}>

@@ -119,7 +119,7 @@ export default function App() {
 		if (prevPuzzleID) {
 			newPuzzleID = prevPuzzleID
 		} else {
-			newPuzzleID = Date.now() - 1734480000000
+			newPuzzleID = Date.now() - 1770000000000
 		}
 
 		let newPuzzle = generatePuzzle(puzzleData.width, puzzleData.height, newPuzzleID)
