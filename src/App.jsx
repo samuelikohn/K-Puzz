@@ -9,64 +9,32 @@ import tutorialPuzzles from "./utils/tutorialPuzzles.js"
 import "./styles/App.css"
 
 export default function App() {
-	const [currPuzzle, setCurrPuzzle] = useState(null)
-	const [numbersUsed, setNumbersUsed] = useState({})
-	const [puzzleData, setPuzzleData] = useState({width: 3, height: 3, id: 0})
-	const [boxKeys, setBoxKeys] = useState([])
-	const [startTime, setStartTime] = useState(Date.now())
+    const [currPuzzle, setCurrPuzzle] = useState(null)
+    const [numbersUsed, setNumbersUsed] = useState({})
+    const [puzzleData, setPuzzleData] = useState({width: 3, height: 3, id: 0})
+    const [puzzleID, setPuzzleID] = useState(0)
+    const [boxKeys, setBoxKeys] = useState([])
+    const [startTime, setStartTime] = useState(Date.now())
 	const [isSolved, setIsSolved] = useState(false)
-	const [resultsShown, setResultsShown] = useState(false)
-	const [boxCorrectness, setBoxCorrectness] = useState({1: false})
-	const [boxEmptiness, setBoxEmptiness] = useState({1: false})
+    const [resultsShown, setResultsShown] = useState(false)
+    const [boxCorrectness, setBoxCorrectness] = useState({1: false})
+    const [boxEmptiness, setBoxEmptiness] = useState({1: false})
 	const [boxStates, setBoxStates] = useState(null)
 	const [numChecks, setNumChecks] = useState(0)
 	const [numReveals, setNumReveals] = useState(0)
+	const TUTORIAL_IDS = [1, 2, 3, 4, 5]
 
 	// Wait for puzzle data to get puzzle
-	useEffect(() => {
-		async function getPuzzleByID(puzzleID) {
-			try {
-				if (!puzzleID) {
-					throw new Error("No puzzle ID provided")
-				}
-
-				let newPuzzle
-				if ([1, 2, 3, 4, 5].includes(puzzleID)) {
-					newPuzzle = {...tutorialPuzzles[puzzleID - 1]}
-				} else {
-					const response = await fetch(`/puzzle/${puzzleID}`)
-					if (!response.ok) {
-						throw new Error(`HTTP error! status: ${response.status}`)
-					}
-					const data = await response.json()
-					newPuzzle = {...data, puzzle: JSON.parse(data.puzzle)}
-				}
-				
-				// On successful GET, set states
-				const keys = []
-				for (let i = 0; i < 2 * newPuzzle.puzzle.boxes.length; i++) {
-					keys.push(v4())
-				}
-				setBoxKeys(keys)
-				setCurrPuzzle(newPuzzle)
-				setStartTime(Date.now())
-
-			} catch (err) {
-
-				// If no ID or no puzzle found, generate new puzzle and ID
-				let newPuzzle = generatePuzzle(puzzleData.width, puzzleData.height)
-				while (anyIsolatedBoxes(newPuzzle) || noUniqueSolution(newPuzzle)) {
-					newPuzzle = generatePuzzle(puzzleData.width, puzzleData.height)
-				}
-				const newID = Date.now() - 1734480000000
-				writeToDB(newID, newPuzzle, puzzleData.width, puzzleData.height)
-
-				// Setting new ID calls effect again
-				setPuzzleData(prevPuzzleData => ({...prevPuzzleData, id: newID}))
-			}
+    useEffect(() => {
+		const newPuzzle = getPuzzleByID(puzzleData.id)
+		const keys = []
+		for (let i = 0; i < 2 * newPuzzle.puzzle.boxes.length; i++) {
+			keys.push(v4())
 		}
-		getPuzzleByID(puzzleData.id)
-	}, [puzzleData])
+		setBoxKeys(keys)
+		setCurrPuzzle(newPuzzle)
+		setStartTime(Date.now())
+    }, [puzzleData])
 
 	// Once puzzle is retrieved, set box states
 	useEffect(() => {
@@ -139,6 +107,29 @@ export default function App() {
 		setBoxStates(null)
 		setPuzzleData(data)
 		setIsSolved(false)
+	}
+
+	function getPuzzleByID(prevPuzzleID) {
+		if (TUTORIAL_IDS.includes(prevPuzzleID)) {
+			setPuzzleID(newPuzzleID)
+			return tutorialPuzzles[prevPuzzleID - 1]
+		}
+
+		let newPuzzleID
+		if (prevPuzzleID) {
+			newPuzzleID = prevPuzzleID
+		} else {
+			newPuzzleID = Date.now() - 1734480000000
+		}
+
+		let newPuzzle = generatePuzzle(puzzleData.width, puzzleData.height, newPuzzleID)
+		while (anyIsolatedBoxes(newPuzzle) || noUniqueSolution(newPuzzle)) {
+			newPuzzleID += 1
+			newPuzzle = generatePuzzle(puzzleData.width, puzzleData.height, newPuzzleID)
+		}
+		setPuzzleID(newPuzzleID)
+	
+		return {puzzle: newPuzzle, width: puzzleData.width, height: puzzleData.height}
 	}
 
 	function noUniqueSolution(puzzle) {
@@ -235,26 +226,11 @@ export default function App() {
 		}
 	}
 
-	function writeToDB(newID, newPuzzle, width, height) {
-		fetch("/puzzle", {
-			method: "POST",
-			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({newID, newPuzzle, width, height})
-		}).then(response => {
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`)
-			}
-			return response.json()
-		}).catch(error => {
-			console.error("Error:", error)
-		})
-	}
-
 	return (
 		<div className="app">
 			<LeftPanel
 				generateNewPuzzle={generateNewPuzzle}
-				puzzleID={puzzleData.id}
+				puzzleID={puzzleID}
 			/>
 			{
 				currPuzzle &&
@@ -275,8 +251,8 @@ export default function App() {
 					checkBox={checkBox}
 					revealBox={revealBox}
 					resetCheckState={resetCheckState}
-					numChecks={numChecks}
-					numReveals={numReveals}
+                    numChecks={numChecks}
+                    numReveals={numReveals}
 				/>
 			}
 			<RightPanel

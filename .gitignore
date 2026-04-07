@@ -35,3 +35,6 @@ tmp/
 /server/node_modules
 /server/.env
 /server/dist
+
+# misc
+todo.txt

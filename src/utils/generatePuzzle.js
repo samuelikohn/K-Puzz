@@ -1,12 +1,22 @@
+import seedrandom from "seedrandom"
 import { findPath } from "./findPath.js"
 
-export function generatePuzzle(width, height) {
+export function generatePuzzle(width, height, seed) {
+
+    function connectionExists(box, point) {
+        for (const p of box.connections) {
+            if (p[0] === point[0] && p[1] === point[1]) {
+                return true
+            }
+        }
+        return false
+    }
 
     function createConnection(box, dir, chance) {
         const newX = box.x + dir[0]
         const newY = box.y + dir[1]
         const newBox = getBoxByCoords(newX, newY, boxes)
-        if (newBox && (Math.random() < chance) && !connectionExists(newBox, [box.x, box.y])) {
+        if (newBox && (rng() < chance) && !connectionExists(newBox, [box.x, box.y])) {
             const path = findPath(blocked, [box.x, box.y], [newX, newY], width, height)
             if (path) {
                 connections.push(path)
@@ -23,6 +33,28 @@ export function generatePuzzle(width, height) {
         }
         return false
     }
+
+    function getBoxByCoords(x, y, boxes) {
+        for (const box of boxes) {
+            if (box.x === x && box.y === y) {
+                return box
+            }
+        }
+        return null
+    }
+
+    // Fisher-Yates shuffle
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            let j = Math.floor(rng() * (i + 1))
+            let temp = arr[j]
+            arr[j] = arr[i]
+            arr[i] = temp
+        }
+        return arr
+    }
+
+    const rng = seedrandom(String(seed))
 
     // Relative coords of boxes `i` units away
     const dirs = [
@@ -68,7 +100,7 @@ export function generatePuzzle(width, height) {
     const boxes = []
     for (let i = 0; i < width; i++) {
         for (let j = 0; j < height; j++) {
-            if (Math.random() < 0.75) {
+            if (rng() < 0.75) {
                 boxes.push({
                     x: i,
                     y: j,
@@ -122,35 +154,4 @@ export function generatePuzzle(width, height) {
         boxes,
         connections
     }
-}
-
-// Fisher-Yates shuffle
-function shuffle(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1))
-        let temp = arr[j]
-        arr[j] = arr[i]
-        arr[i] = temp
-    }
-    return arr
-}
-
-// Get box by coords if exists, else null
-function getBoxByCoords(x, y, boxes) {
-    for (const box of boxes) {
-        if (box.x === x && box.y === y) {
-            return box
-        }
-    }
-    return null
-}
-
-// Check if two boxes are already connected
-function connectionExists(box, point) {
-    for (const p of box.connections) {
-        if (p[0] === point[0] && p[1] === point[1]) {
-            return true
-        }
-    }
-    return false
 }

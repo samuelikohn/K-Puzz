@@ -2,15 +2,6 @@ import { ScrollArea } from "@base-ui-components/react/scroll-area"
 import "../styles/Overlay.css"
 
 export default function About(props) {
-
-    function openWebsite() {
-        // window.open(TODO, "_blank").focus()
-    }
-
-    function openBlog() {
-        // window.open(TODO, "_blank").focus()
-    }
-
     return (
         <div className="overlayBackdrop" onClick={props.onClose}>
             <ScrollArea.Root className="scrollArea">
@@ -41,9 +32,9 @@ export default function About(props) {
                                 <p>Website created by Sam Kohn</p>
                             </div>
                             <div className="links">
-                                <button onClick={openWebsite}>Website</button>
+                                <button onClick={() => window.open("https://personalportfolio-three-pi.vercel.app/", "_blank").focus()}>Website</button>
                                 <button onClick={() => window.open("https://github.com/samuelikohn", "_blank").focus()}>GitHub</button>
-                                <button onClick={openBlog}>Blog</button>
+                                <button onClick={() => window.open("https://personalportfolio-git-main-sam-kohns-projects.vercel.app/blog/kpuzz", "_blank").focus()}>Blog</button>
                                 <button onClick={() => window.open("https://github.com/samuelikohn/K-Puzz", "_blank").focus()}>Source</button>
                             </div>
                             <br/>
