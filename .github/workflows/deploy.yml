@@ -1,0 +1,60 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # 1. Checkout this source repository
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          path: 'source-repo'
+
+      # 2. Setup Node and build the project
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'source-repo/package-lock.json'
+
+      - name: Build Project
+        run: |
+          cd source-repo
+          npm install
+          npm run build
+
+      # 3. Checkout the target repository
+      - name: Checkout Target Repo
+        uses: actions/checkout@v4
+        with:
+          repository: samuelikohn/samuelikohn.github.io
+          token: ${{ secrets.TARGET_REPO_TOKEN }}
+          path: 'target-repo'
+          persist-credentials: true
+
+      # 4. Move files and Push
+      - name: Sync Files and Push
+        run: |
+          mkdir -p target-repo/kpuzz 
+
+          cp -r source-repo/dist/* target-repo/kpuzz/
+
+          cd target-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add .
+          if git diff-index --quiet HEAD --; then
+            echo "No changes to commit"
+          else
+            git commit -m "Deploy: sync build from 'K-Puzz'"
+            git push origin main
+          fi

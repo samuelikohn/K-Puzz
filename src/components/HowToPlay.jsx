@@ -25,7 +25,7 @@ export default function HowToPlay(props) {
                             <div className="controlBox">
                                 <p>For example, in the following puzzle, the numbers placed in the highlighted boxes must sum to 8.</p>
                             </div>
-                            <img src={`src/assets/example_${theme}.png`} alt="Example Puzzle"/>
+                            <img src={`example_${theme}.png`} alt="Example Puzzle"/>
                             <div className="controlBox">
                                 <p>Enter a <b>Puzzle ID</b> of <b>1</b>, <b>2</b>, <b>3</b>, <b>4</b>, or <b>5</b> for simple tutorial puzzles.</p>
                             </div>

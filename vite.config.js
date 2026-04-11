@@ -3,6 +3,14 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig(() => {
 	return {
-		plugins: [react()]
+		plugins: [react()],
+		build: {
+			rollupOptions: {
+				output: {
+					entryFileNames: `main.js`,
+					assetFileNames: `styles.[ext]`
+				}
+			}
+		}
 	}
 })
