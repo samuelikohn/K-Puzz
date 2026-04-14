@@ -111,7 +111,7 @@ export default function App() {
 
 	function getPuzzleByID(prevPuzzleID) {
 		if (TUTORIAL_IDS.includes(prevPuzzleID)) {
-			setPuzzleID(newPuzzleID)
+			setPuzzleID(prevPuzzleID)
 			return tutorialPuzzles[prevPuzzleID - 1]
 		}
 
