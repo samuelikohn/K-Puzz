@@ -1,0 +1,8 @@
+bug: Error when entering same tutorial puzzle twice in a row
+bug: tabbing when overlay up does weird stuff
+feature: add puzzle dims to id and parse
+feature: add query strings
+feature: share results
+UI: mobile layout
+bug: check counter increases if box is empty
+admin: write README
