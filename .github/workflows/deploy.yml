@@ -13,13 +13,13 @@ jobs:
 
       # 1. Checkout this source repository
       - name: Checkout Source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: 'source-repo'
 
       # 2. Setup Node and build the project
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '24'
           cache: 'npm'
@@ -33,7 +33,7 @@ jobs:
 
       # 3. Checkout the target repository
       - name: Checkout Target Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: samuelikohn/samuelikohn.github.io
           token: ${{ secrets.TARGET_REPO_TOKEN }}

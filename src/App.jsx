@@ -194,7 +194,7 @@ export default function App() {
 			const newBoxStates = {}
 			for (const box of Object.keys(prevBoxStates)) {
 				newBoxStates[box] = {...prevBoxStates[box]}
-				if (!prevBoxStates[box].revealed && !prevBoxStates[box].checkedCorrect && !prevBoxStates[box].checkedIncorrect) {
+				if (!boxEmptiness[Number(box)] && !prevBoxStates[box].revealed && !prevBoxStates[box].checkedCorrect && !prevBoxStates[box].checkedIncorrect) {
 					newBoxStates[box].checkHighlighted = isHighlighted
 				}
 			}
