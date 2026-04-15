@@ -1,12 +1,10 @@
-import { useState, useRef } from "react"
+import { useRef } from "react"
 import { useTheme } from '../contexts/ThemeContext'
 import toast, { Toaster } from 'react-hot-toast'
 import copy from "copy-to-clipboard"
 import "../styles/Settings.css"
 
 export default function Settings(props) {
-    const [selectedWidth, setSelectedWidth] = useState("3")
-    const [selectedHeight, setSelectedHeight] = useState("3")
     const {theme, toggleTheme} = useTheme()
     const textRef = useRef()
 
@@ -27,9 +25,9 @@ export default function Settings(props) {
     }
 
     function generateNewPuzzle(formData) {
-        const width = Number(formData.get("puzzleWidth"))
-        const height = Number(formData.get("puzzleHeight"))
-        const id = Number(formData.get("idInput"))
+        const width = Number(props.selectedWidth)
+        const height = Number(props.selectedHeight)
+        const id = String(formData.get("idInput") ?? "").trim()
         props.generateNewPuzzle({width, height, id})
     }
 
@@ -43,8 +41,8 @@ export default function Settings(props) {
                     <select
                         name="puzzleWidth"
                         id="puzzleWidth"
-                        value={selectedWidth}
-                        onChange={(event) => setSelectedWidth(event.target.value)}
+                        value={props.selectedWidth}
+                        onChange={(event) => props.setSelectedWidth(event.target.value)}
                     >
                         <option value="3">3</option>
                         <option value="4">4</option>
@@ -56,8 +54,8 @@ export default function Settings(props) {
                     <select
                         name="puzzleHeight"
                         id="puzzleHeight"
-                        value={selectedHeight}
-                        onChange={(event) => setSelectedHeight(event.target.value)}
+                        value={props.selectedHeight}
+                        onChange={(event) => props.setSelectedHeight(event.target.value)}
                     >
                         <option value="3">3</option>
                         <option value="4">4</option>

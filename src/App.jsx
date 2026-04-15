@@ -8,25 +8,28 @@ import { generatePuzzle } from "./utils/generatePuzzle.js"
 import tutorialPuzzles from "./utils/tutorialPuzzles.js"
 import "./styles/App.css"
 
+const TUTORIAL_IDS = [1, 2, 3, 4, 5]
+const VALID_DIMENSIONS = [3, 4, 5]
+
 export default function App() {
     const [currPuzzle, setCurrPuzzle] = useState(null)
     const [numbersUsed, setNumbersUsed] = useState({})
-    const [puzzleData, setPuzzleData] = useState({width: 3, height: 3, id: 0})
+    const [puzzleData, setPuzzleData] = useState({width: 3, height: 3, id: ""})
     const [puzzleID, setPuzzleID] = useState(0)
+    const [selectedDimensions, setSelectedDimensions] = useState({width: "3", height: "3"})
     const [boxKeys, setBoxKeys] = useState([])
     const [startTime, setStartTime] = useState(Date.now())
 	const [isSolved, setIsSolved] = useState(false)
     const [resultsShown, setResultsShown] = useState(false)
     const [boxCorrectness, setBoxCorrectness] = useState({1: false})
-    const [boxEmptiness, setBoxEmptiness] = useState({1: false})
+	const [boxEmptiness, setBoxEmptiness] = useState({1: false})
 	const [boxStates, setBoxStates] = useState(null)
 	const [numChecks, setNumChecks] = useState(0)
 	const [numReveals, setNumReveals] = useState(0)
-	const TUTORIAL_IDS = [1, 2, 3, 4, 5]
 
 	// Wait for puzzle data to get puzzle
     useEffect(() => {
-		const newPuzzle = getPuzzleByID(puzzleData.id)
+		const newPuzzle = getPuzzleByID(puzzleData)
 		const keys = []
 		for (let i = 0; i < 2 * newPuzzle.puzzle.boxes.length; i++) {
 			keys.push(v4())
@@ -105,31 +108,88 @@ export default function App() {
 		setNumChecks(0)
 		setNumReveals(0)
 		setBoxStates(null)
+        setSelectedDimensions({
+            width: String(data.width),
+            height: String(data.height)
+        })
 		setPuzzleData(data)
 		setIsSolved(false)
 	}
 
-	function getPuzzleByID(prevPuzzleID) {
-		if (TUTORIAL_IDS.includes(prevPuzzleID)) {
-			setPuzzleID(prevPuzzleID)
-			return tutorialPuzzles[prevPuzzleID - 1]
+    function getTutorialPuzzle(tutorialID) {
+        setPuzzleID(tutorialID)
+        return tutorialPuzzles[tutorialID - 1]
+    }
+
+    function isDimensionDigit(value) {
+        return VALID_DIMENSIONS.includes(Number(value))
+    }
+
+    function encodePuzzleID(seed, width, height) {
+        return `${seed}${width}${height}`
+    }
+
+    function resolvePuzzleRequest(data) {
+        const requestedWidth = Number(data.width)
+        const requestedHeight = Number(data.height)
+        const rawID = String(data.id ?? "").trim()
+        const numericID = Number(rawID)
+
+		if (rawID && TUTORIAL_IDS.includes(numericID)) {
+            return {
+                tutorialID: numericID,
+                width: tutorialPuzzles[numericID - 1].width,
+                height: tutorialPuzzles[numericID - 1].height,
+                syncDimensions: false
+            }
 		}
 
-		let newPuzzleID
-		if (prevPuzzleID) {
-			newPuzzleID = prevPuzzleID
-		} else {
-			newPuzzleID = Date.now() - 1770000000000
-		}
+        if (rawID.length > 2) {
+            const parsedWidth = Number(rawID[rawID.length - 2])
+            const parsedHeight = Number(rawID[rawID.length - 1])
 
-		let newPuzzle = generatePuzzle(puzzleData.width, puzzleData.height, newPuzzleID)
+            if (isDimensionDigit(parsedWidth) && isDimensionDigit(parsedHeight)) {
+                return {
+                    seed: Number(rawID.slice(0, -2)),
+                    width: parsedWidth,
+                    height: parsedHeight,
+                    syncDimensions: true
+                }
+            }
+        }
+
+        return {
+            seed: rawID ? Number(rawID) : Date.now() - 1770000000000,
+            width: requestedWidth,
+            height: requestedHeight,
+            syncDimensions: false
+        }
+    }
+
+	function getPuzzleByID(data) {
+        const resolvedRequest = resolvePuzzleRequest(data)
+
+        if (resolvedRequest.tutorialID) {
+            return getTutorialPuzzle(resolvedRequest.tutorialID)
+        }
+
+		let newPuzzleID = resolvedRequest.seed
+		let newPuzzle = generatePuzzle(resolvedRequest.width, resolvedRequest.height, newPuzzleID)
 		while (anyIsolatedBoxes(newPuzzle) || noUniqueSolution(newPuzzle)) {
 			newPuzzleID += 1
-			newPuzzle = generatePuzzle(puzzleData.width, puzzleData.height, newPuzzleID)
+			newPuzzle = generatePuzzle(resolvedRequest.width, resolvedRequest.height, newPuzzleID)
 		}
-		setPuzzleID(newPuzzleID)
+
+        if (resolvedRequest.syncDimensions) {
+            setSelectedDimensions({
+                width: String(resolvedRequest.width),
+                height: String(resolvedRequest.height)
+            })
+        }
+
+		setPuzzleID(encodePuzzleID(newPuzzleID, resolvedRequest.width, resolvedRequest.height))
 	
-		return {puzzle: newPuzzle, width: puzzleData.width, height: puzzleData.height}
+		return {puzzle: newPuzzle, width: resolvedRequest.width, height: resolvedRequest.height}
 	}
 
 	function noUniqueSolution(puzzle) {
@@ -231,6 +291,10 @@ export default function App() {
 			<LeftPanel
 				generateNewPuzzle={generateNewPuzzle}
 				puzzleID={puzzleID}
+                selectedWidth={selectedDimensions.width}
+                selectedHeight={selectedDimensions.height}
+                setSelectedWidth={(width) => setSelectedDimensions(prevDimensions => ({...prevDimensions, width}))}
+                setSelectedHeight={(height) => setSelectedDimensions(prevDimensions => ({...prevDimensions, height}))}
 			/>
 			{
 				currPuzzle &&
