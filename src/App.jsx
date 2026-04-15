@@ -10,13 +10,23 @@ import "./styles/App.css"
 
 const TUTORIAL_IDS = [1, 2, 3, 4, 5]
 const VALID_DIMENSIONS = [3, 4, 5]
+const QUERY_PARAM_KEY = "id"
+
+function getQueryPuzzleID() {
+    const params = new URLSearchParams(window.location.search)
+    const queryID = params.get(QUERY_PARAM_KEY)?.trim() ?? ""
+
+    return /^[1-9]\d*$/.test(queryID) ? queryID : ""
+}
 
 export default function App() {
+    const initialQueryID = getQueryPuzzleID()
     const [currPuzzle, setCurrPuzzle] = useState(null)
     const [numbersUsed, setNumbersUsed] = useState({})
-    const [puzzleData, setPuzzleData] = useState({width: 3, height: 3, id: ""})
+    const [puzzleData, setPuzzleData] = useState({width: 3, height: 3, id: initialQueryID})
     const [puzzleID, setPuzzleID] = useState(0)
     const [selectedDimensions, setSelectedDimensions] = useState({width: "3", height: "3"})
+    const [enteredPuzzleID, setEnteredPuzzleID] = useState(initialQueryID)
     const [boxKeys, setBoxKeys] = useState([])
     const [startTime, setStartTime] = useState(Date.now())
 	const [isSolved, setIsSolved] = useState(false)
@@ -26,6 +36,18 @@ export default function App() {
 	const [boxStates, setBoxStates] = useState(null)
 	const [numChecks, setNumChecks] = useState(0)
 	const [numReveals, setNumReveals] = useState(0)
+
+    useEffect(() => {
+        if (!puzzleID) {
+            return
+        }
+
+        const params = new URLSearchParams(window.location.search)
+        params.set(QUERY_PARAM_KEY, String(puzzleID))
+        const queryString = params.toString()
+        const nextURL = `${window.location.pathname}${queryString ? `?${queryString}` : ""}${window.location.hash}`
+        window.history.replaceState(null, "", nextURL)
+    }, [puzzleID])
 
 	// Wait for puzzle data to get puzzle
     useEffect(() => {
@@ -112,6 +134,7 @@ export default function App() {
             width: String(data.width),
             height: String(data.height)
         })
+        setEnteredPuzzleID(String(data.id ?? ""))
 		setPuzzleData(data)
 		setIsSolved(false)
 	}
@@ -187,7 +210,8 @@ export default function App() {
             })
         }
 
-		setPuzzleID(encodePuzzleID(newPuzzleID, resolvedRequest.width, resolvedRequest.height))
+        const encodedPuzzleID = encodePuzzleID(newPuzzleID, resolvedRequest.width, resolvedRequest.height)
+		setPuzzleID(encodedPuzzleID)
 	
 		return {puzzle: newPuzzle, width: resolvedRequest.width, height: resolvedRequest.height}
 	}
@@ -290,9 +314,11 @@ export default function App() {
 		<div className="app" id="app-shell">
 			<LeftPanel
 				generateNewPuzzle={generateNewPuzzle}
+                enteredPuzzleID={enteredPuzzleID}
 				puzzleID={puzzleID}
                 selectedWidth={selectedDimensions.width}
                 selectedHeight={selectedDimensions.height}
+                setEnteredPuzzleID={setEnteredPuzzleID}
                 setSelectedWidth={(width) => setSelectedDimensions(prevDimensions => ({...prevDimensions, width}))}
                 setSelectedHeight={(height) => setSelectedDimensions(prevDimensions => ({...prevDimensions, height}))}
 			/>

@@ -24,10 +24,10 @@ export default function Settings(props) {
         }
     }
 
-    function generateNewPuzzle(formData) {
+    function generateNewPuzzle() {
         const width = Number(props.selectedWidth)
         const height = Number(props.selectedHeight)
-        const id = String(formData.get("idInput") ?? "").trim()
+        const id = props.enteredPuzzleID.trim()
         props.generateNewPuzzle({width, height, id})
     }
 
@@ -64,7 +64,16 @@ export default function Settings(props) {
                 </div>
                 <div className="setting getID">
                     <label htmlFor="idInput" id="idInputLabel">Enter Puzzle ID</label>
-                    <input type="text" name="idInput" id="idInput" onChange={filterInput}/>
+                    <input
+                        type="text"
+                        name="idInput"
+                        id="idInput"
+                        onChange={(event) => {
+                            filterInput(event)
+                            props.setEnteredPuzzleID(event.target.value)
+                        }}
+                        value={props.enteredPuzzleID}
+                    />
                     <label htmlFor="idOutput">Puzzle ID</label>
                     <div className="copyField">
                         <input type="text" name="idOutput" id="idOutput" value={props.puzzleID} ref={textRef} disabled/>
