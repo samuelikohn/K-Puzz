@@ -1,3 +1,4 @@
+import ModalLayer from "./ModalLayer.jsx"
 import "../styles/Select.css"
 
 export default function RevealSelect(props) {
@@ -8,14 +9,35 @@ export default function RevealSelect(props) {
     } : null
 
     return (
-        <div className="selectBackdrop" onClick={props.onClose}>
-            <div className="select" style={selectStyle}>
-                <p className="boxSelect" onClick={() => {
+        <ModalLayer
+            ariaLabel="Reveal options"
+            backdropClassName="selectBackdrop"
+            contentClassName="select"
+            onClose={props.onClose}
+            contentStyle={selectStyle}
+            role="menu"
+        >
+            <button
+                className="boxSelect"
+                onClick={() => {
                     props.setCheckHighlights(false)
                     props.setRevealHighlights(true)
-                }}>Box</p>
-                <p className="puzzleSelect" onClick={() => props.setConfirmRevealShown(true)}>Puzzle</p>
-            </div>
-        </div>
+                    props.onClose()
+                }}
+                type="button"
+            >
+                Box
+            </button>
+            <button
+                id="puzzleSelect"
+                onClick={() => {
+                    props.onClose()
+                    props.setConfirmRevealShown(true)
+                }}
+                type="button"
+            >
+                Puzzle
+            </button>
+        </ModalLayer>
     )
 }

@@ -1,3 +1,4 @@
+import ModalLayer from "./ModalLayer.jsx"
 import "../styles/Select.css"
 
 export default function CheckSelect(props) {
@@ -8,14 +9,35 @@ export default function CheckSelect(props) {
     } : null
 
     return (
-        <div className="selectBackdrop" onClick={props.onClose}>
-            <div className="select" style={selectStyle}>
-                <p className="boxSelect" onClick={() => {
+        <ModalLayer
+            ariaLabel="Check options"
+            backdropClassName="selectBackdrop"
+            contentClassName="select"
+            onClose={props.onClose}
+            contentStyle={selectStyle}
+            role="menu"
+        >
+            <button
+                className="boxSelect"
+                onClick={() => {
                     props.setRevealHighlights(false)
                     props.setCheckHighlights(true)
-                }}>Box</p>
-                <p className="puzzleSelect" onClick={() => props.setConfirmCheckShown(true)}>Puzzle</p>
-            </div>
-        </div>
+                    props.onClose()
+                }}
+                type="button"
+            >
+                Box
+            </button>
+            <button
+                id="puzzleSelect"
+                onClick={() => {
+                    props.onClose()
+                    props.setConfirmCheckShown(true)
+                }}
+                type="button"
+            >
+                Puzzle
+            </button>
+        </ModalLayer>
     )
 }

@@ -7,6 +7,10 @@
     z-index: 1;
 }
 
+.modalShell {
+    outline: none;
+}
+
 .overlay {
     background-color: var(--background-color-body);
     border-radius: 0.5rem;

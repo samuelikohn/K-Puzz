@@ -1,4 +1,5 @@
 import { ScrollArea } from "@base-ui-components/react/scroll-area"
+import ModalLayer from "./ModalLayer.jsx"
 import "../styles/Overlay.css"
 
 export default function Results(props) {
@@ -13,25 +14,27 @@ export default function Results(props) {
     }
 
     return (
-        <div className="overlayBackdrop" onClick={props.onClose}>
-            <ScrollArea.Root className="scrollArea">
-                <ScrollArea.Viewport className="viewport">
-                    <ScrollArea.Content>
-                        <div className="overlay resultsDiv" onClick={(event) => event.stopPropagation()}>
-                            <h2 className="congrats">Congratulations!</h2>
-                            <div className="controlBox">
-                                <h4 className="bottomBreak">Final Time: {translateTime(props.finalTime)}</h4>
-                                <h4 className="bottomBreak">Checks Used: {props.numChecks}</h4>
-                                <h4>Reveals Used: {props.numReveals}</h4>
+        <ModalLayer contentClassName="modalShell" onClose={props.onClose}>
+            {({ titleId }) => (
+                <ScrollArea.Root className="scrollArea">
+                    <ScrollArea.Viewport className="viewport">
+                        <ScrollArea.Content>
+                            <div className="overlay resultsDiv">
+                                <h2 className="congrats" id={titleId}>Congratulations!</h2>
+                                <div className="controlBox">
+                                    <h4 className="bottomBreak">Final Time: {translateTime(props.finalTime)}</h4>
+                                    <h4 className="bottomBreak">Checks Used: {props.numChecks}</h4>
+                                    <h4>Reveals Used: {props.numReveals}</h4>
+                                </div>
+                                <button onClick={props.onClose}>Show Puzzle</button>
                             </div>
-                            <button onClick={props.onClose}>Show Puzzle</button>
-                        </div>
-                    </ScrollArea.Content>
-                </ScrollArea.Viewport>
-                <ScrollArea.Scrollbar className="scrollbar">
-                    <ScrollArea.Thumb className="thumb"/>
-                </ScrollArea.Scrollbar>
-            </ScrollArea.Root>
-        </div>
+                        </ScrollArea.Content>
+                    </ScrollArea.Viewport>
+                    <ScrollArea.Scrollbar className="scrollbar">
+                        <ScrollArea.Thumb className="thumb"/>
+                    </ScrollArea.Scrollbar>
+                </ScrollArea.Root>
+            )}
+        </ModalLayer>
     )
 }
