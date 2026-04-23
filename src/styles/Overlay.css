@@ -98,8 +98,7 @@
 
 .resultsCopyField button {
     margin: 0 0 0 0.5rem;
-    width: 2rem;
-    height: 2rem;
+    padding: 0.125rem;
 }
 
 .resultsShareText {
