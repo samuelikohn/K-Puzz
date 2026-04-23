@@ -1,3 +1,2 @@
-feature: share results
 UI: mobile layout
 admin: write README
