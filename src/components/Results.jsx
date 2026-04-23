@@ -23,7 +23,7 @@ export default function Results(props) {
         const didCopy = copy(shareText)
 
         if (didCopy) {
-            toast("Results copied to clipboard!", { toasterId: toasterId })
+            toast("Copied!", { toasterId: toasterId })
         }
     }
 
@@ -49,9 +49,9 @@ export default function Results(props) {
                                 <button onClick={props.onClose}>Show Puzzle</button>
                                 <Toaster
                                     toasterId={toasterId}
-                                    position="bottom-left"
+                                    position="bottom-center"
                                     containerStyle={{
-                                        position: "relative"
+                                        position: "absolute"
                                     }}
                                     toastOptions={{
                                         duration: 2000,
