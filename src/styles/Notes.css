@@ -1,4 +1,4 @@
-textarea {
+.notesField {
     position: absolute;
     overflow: hidden;
     outline: none;
@@ -21,7 +21,7 @@ textarea {
         border 0.2s ease;
 }
 
-textarea:focus {
+.notesField:focus {
     width: 4rem;
     height: 6rem;
     overflow-y: scroll;
@@ -31,17 +31,17 @@ textarea:focus {
         height 0.1s ease;
 }
 
-textarea:not(:focus):hover {
+.notesField:not(:focus):hover {
     filter: brightness(var(--text-filter));
 }
 
-textarea::-webkit-scrollbar {
+.notesField::-webkit-scrollbar {
     background-color: gray;
     border-radius: 0.25rem;
     width: 0.5rem;
 }
 
-textarea::-webkit-scrollbar-thumb {
+.notesField::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-color);
     border-radius: 0.25rem;
     width: 0.5rem;

@@ -8,6 +8,6 @@ export default function Notes(props) {
     }
 
     return (
-        <textarea style={divStyle} readOnly={props.isSolved}/>
+        <textarea className="notesField" style={divStyle} readOnly={props.isSolved}/>
     )
 }

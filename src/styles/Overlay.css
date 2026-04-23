@@ -88,6 +88,35 @@
     margin-top: 3rem;
 }
 
+.resultsCopyField {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: calc(100% - 4rem);
+    margin-top: 3rem;
+}
+
+.resultsCopyField button {
+    margin: 0 0 0 0.5rem;
+    width: 2rem;
+    height: 2rem;
+}
+
+.resultsShareText {
+    background-color: var(--background-color-body);
+    color: var(--text-color);
+    border: 0.0625rem inset var(--background-color-control-box);
+    border-radius: 0.25rem;
+    flex: 1;
+    height: 4.5rem;
+    width: 6.5rem;
+    padding: 0 0.5rem;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border 0.2s ease;
+}
+
 .resultsDiv h4 {
     padding-bottom: 2rem;
     margin-top: 2rem;

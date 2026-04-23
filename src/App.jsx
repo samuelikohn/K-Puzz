@@ -26,7 +26,7 @@ export default function App() {
     const [puzzleData, setPuzzleData] = useState({width: 3, height: 3, id: initialQueryID})
     const [puzzleID, setPuzzleID] = useState(0)
     const [selectedDimensions, setSelectedDimensions] = useState({width: "3", height: "3"})
-    const [enteredPuzzleID, setEnteredPuzzleID] = useState(initialQueryID)
+    const [enteredPuzzleID, setEnteredPuzzleID] = useState("")
     const [boxKeys, setBoxKeys] = useState([])
     const [startTime, setStartTime] = useState(Date.now())
 	const [isSolved, setIsSolved] = useState(false)
@@ -134,7 +134,7 @@ export default function App() {
             width: String(data.width),
             height: String(data.height)
         })
-        setEnteredPuzzleID(String(data.id ?? ""))
+        setEnteredPuzzleID("")
 		setPuzzleData(data)
 		setIsSolved(false)
 	}

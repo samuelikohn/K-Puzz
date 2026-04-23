@@ -7,12 +7,13 @@ import "../styles/Settings.css"
 export default function Settings(props) {
     const {theme, toggleTheme} = useTheme()
     const textRef = useRef()
+    const toasterId = "settings-toast"
 
     function copyToClipboard() {
         const copyText = textRef.current.value
         const didCopy = copy(copyText)
         if (didCopy) {
-            toast("Copied!")
+            toast("Copied!", { toasterId: toasterId })
         }
     }
 
@@ -81,6 +82,7 @@ export default function Settings(props) {
                             <i className="fa-regular fa-copy"></i>
                         </button>
                         <Toaster
+                            toasterId={toasterId}
                             position="bottom-left"
                             containerStyle={{
                                 position: "relative"
