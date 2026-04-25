@@ -1,3 +1,8 @@
+.numbers {
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .numbersList {
     min-height: 6rem;
     display: grid;
@@ -5,4 +10,11 @@
     grid-template-rows: repeat(5, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
+}
+
+@media (max-width: 48rem) {
+    .numbersList {
+        width: 100%;
+        justify-items: center;
+    }
 }
