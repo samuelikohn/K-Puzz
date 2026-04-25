@@ -17,7 +17,7 @@ export default function HowToPlay(props) {
                                 <div className="controlBox">
                                     <h4>There is only one rule:</h4>
                                     <p>
-                                        Using the available numbers exactly once each,
+                                        Using the <b>available numbers</b> exactly once each,
                                         fill in the bottom of each box such that the
                                         number in the top of each box is equal to the
                                         sum of the bottom numbers in the boxes directly
