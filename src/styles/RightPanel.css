@@ -34,37 +34,3 @@
 .newGameBtn {
     width: 14.8125rem;
 }
-
-@media (max-width: 48rem) {
-    .rightPanel {
-        width: min(100%, 32rem);
-        margin: 0 1rem 1rem;
-        gap: 0.75rem;
-    }
-
-    .rightPanel > button,
-    .rightPanel a,
-    .rightPanel a button,
-    .resultsBtn,
-    .newGameBtn {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-    }
-
-    .rightPanel a {
-        display: block;
-    }
-
-    .checkReveal {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .checkReveal button,
-    .check,
-    .reveal {
-        width: 100%;
-        margin: 0;
-    }
-}

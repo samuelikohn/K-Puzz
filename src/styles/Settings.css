@@ -71,36 +71,3 @@
     transition:
         border-top 0.2s ease;
 }
-
-@media (max-width: 48rem) {
-    .settingsForm {
-        width: 100%;
-    }
-
-    .setting {
-        width: 100%;
-        gap: 0.75rem;
-    }
-
-    .setting input {
-        width: 100%;
-        margin: 0.5rem 0;
-    }
-
-    .getID,
-    .copyField {
-        width: 100%;
-    }
-
-    .copyField {
-        gap: 0.5rem;
-    }
-
-    #idInputLabel {
-        width: 100%;
-    }
-
-    .themeToggle {
-        padding: 1rem 0;
-    }
-}

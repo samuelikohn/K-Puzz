@@ -1,29 +1,5 @@
-.puzzleViewport {
-    overflow-x: auto;
-    overflow-y: hidden;
-    width: fit-content;
-    max-width: calc(100vw - 4rem);
-    padding: 0 1rem;
-    box-sizing: border-box;
-}
-
 .puzzleDiv {
     position: relative;
     overflow: hidden;
-    margin: 1rem auto;
-    flex: none;
-}
-
-@media (max-width: 48rem) {
-    .puzzleViewport {
-        width: calc(100vw - 2rem);
-        max-width: calc(100vw - 2rem);
-        margin: 0 1rem;
-        padding: 0 0.5rem;
-        align-items: flex-start;
-    }
-
-    .puzzleDiv {
-        margin: 1rem 0;
-    }
+    margin: 1rem 0;
 }

@@ -59,59 +59,57 @@ export default function Puzzle(props) {
     }
 
     return (
-        <div className="puzzleViewport controlBox">
-            <div className="puzzleDiv" style={divStyle}>
-                {
-                    props.resultsShown &&
-                    <Results
-                        onClose={() => props.setResultsShown(false)}
-                        finalTime={finalTime}
-                        numChecks={props.numChecks}
-                        numReveals={props.numReveals}
-                    />
-                }
-                {
-                    props.puzzle.puzzle.boxes.map((box, i) =>
-                        <Fragment key={props.keys[i]}>
-                            <Box
-                                topVal={box.topVal}
-                                bottomVal={box.bottomVal}
-                                x={box.x}
-                                y={box.y}
-                                width={WIDTH}
-                                height={HEIGHT}
-                                margin={MARGIN}
-                                offsetX={OFFSET_X}
-                                offsetY={OFFSET_Y}
-                                onChange={handleBoxChange}
-                                isSolved={props.isSolved}
-                                boxStates={props.boxStates}
-                                checkBox={props.checkBox}
-                                revealBox={props.revealBox}
-                                resetCheckState={props.resetCheckState}
-                            />
-                            <Notes
-                                x={box.x}
-                                y={box.y}
-                                width={WIDTH}
-                                height={HEIGHT}
-                                margin={MARGIN}
-                                offsetX={OFFSET_X - 0.5}
-                                offsetY={OFFSET_Y - 0.5}
-                                isSolved={props.isSolved}
-                            />
-                        </Fragment>
-                    )
-                }
-                <Connections
-                    paths={props.puzzle.puzzle.connections}
-                    width={WIDTH}
-                    height={HEIGHT}
-                    margin={MARGIN}
-                    offsetX={OFFSET_X}
-                    offsetY={OFFSET_Y}
+        <div className="puzzleDiv controlBox" style={divStyle}>
+            {
+                props.resultsShown &&
+                <Results
+                    onClose={() => props.setResultsShown(false)}
+                    finalTime={finalTime}
+                    numChecks={props.numChecks}
+                    numReveals={props.numReveals}
                 />
-            </div>
+            }
+            {
+                props.puzzle.puzzle.boxes.map((box, i) =>
+                    <Fragment key={props.keys[i]}>
+                        <Box
+                            topVal={box.topVal}
+                            bottomVal={box.bottomVal}
+                            x={box.x}
+                            y={box.y}
+                            width={WIDTH}
+                            height={HEIGHT}
+                            margin={MARGIN}
+                            offsetX={OFFSET_X}
+                            offsetY={OFFSET_Y}
+                            onChange={handleBoxChange}
+                            isSolved={props.isSolved}
+                            boxStates={props.boxStates}
+                            checkBox={props.checkBox}
+                            revealBox={props.revealBox}
+                            resetCheckState={props.resetCheckState}
+                        />
+                        <Notes
+                            x={box.x}
+                            y={box.y}
+                            width={WIDTH}
+                            height={HEIGHT}
+                            margin={MARGIN}
+                            offsetX={OFFSET_X - 0.5}
+                            offsetY={OFFSET_Y - 0.5}
+                            isSolved={props.isSolved}
+                        />
+                    </Fragment>
+                )
+            }
+            <Connections
+                paths={props.puzzle.puzzle.connections}
+                width={WIDTH}
+                height={HEIGHT}
+                margin={MARGIN}
+                offsetX={OFFSET_X}
+                offsetY={OFFSET_Y}
+            />
         </div>
     )
 }

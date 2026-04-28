@@ -89,29 +89,3 @@ input:focus {
 button:hover {
     filter: brightness(0.9);
 }
-
-@media (max-width: 48rem) {
-    body {
-        display: block;
-    }
-
-    .controlBox {
-        width: min(100%, 32rem);
-        min-width: 0;
-        margin: 0;
-        box-sizing: border-box;
-    }
-
-    button {
-        width: 100%;
-        max-width: 100%;
-        margin: 0.75rem 0;
-        box-sizing: border-box;
-    }
-
-    input,
-    select {
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-}
