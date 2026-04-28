@@ -2,3 +2,11 @@
     display: flex;
     flex-direction: row;
 }
+
+@media (max-width: 48rem) {
+    .app {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

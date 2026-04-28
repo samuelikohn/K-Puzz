@@ -142,3 +142,13 @@
 .bottomBreak {
     border-bottom: 1px solid var(--text-color);
 }
+
+@media (max-width: 48rem) {
+    .overlay {
+        width: 50%;
+    }
+
+    .overlay .controlBox {
+        width: 50%;
+    }
+}
